@@ -1,0 +1,22 @@
+html, body, #radarmatic { height: 100%; margin: 0; padding: 0; }
+div,p { margin: 0; padding: 0; }
+h1 { display: none; }
+a,a:visited,a:active { color: black; }
+a:hover { text-decoration: none; }
+#panel { display: none; position: absolute; z-index: 1; top: 15px; left: 15px; height: 200px; width: 200px; }
+#animation { cursor: pointer; position: absolute; height: 41px; width: 173px; top: 9px; left: 9px; }
+#zoom_out, #zoom_in { cursor: pointer; position: absolute; height: 41px; }
+#zoom_out { top: 57px; left: 9px; width: 87px; }
+#zoom_in { top: 57px; left: 96px; width: 86px; }			
+#name, #date { font: 11px courier; left: 0; position: absolute; width: 190px; text-align: center; text-shadow: #aaa 1px 1px 6px; color: #555; }
+#name { top: 112px; }
+#date { top: 127px; }
+#info { width: 150px; margin-left: 20px; font:10px monaco,helvetica,sans-serif; text-align: center; }
+#info p { margin-top: 19px; }
+#info select { margin-top: 4px; }
+.info_i { cursor: pointer; position: absolute; width: 17px; height: 17px; top: 166px; left: 166px; background: transparent; opacity: 0.08; }
+.info_i:hover { background: url('info_overlay.png'); }
+#front { position: absolute; top: 0; left: 0; background: url('panel.png'); height: 200px; width: 200px; z-index: 900; }
+.front_flip { -webkit-transform: rotateY(-180deg); z-index: 900; }
+#back { opacity: 0; position: absolute; top: 0; left: 0; background: url('panel_back.png'); height: 200px; width: 200px; z-index: 800; }
+.back_flip { -webkit-transform: rotateY(0deg) !important; z-index: 1000; }

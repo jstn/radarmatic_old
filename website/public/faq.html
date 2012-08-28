@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Radarmatic FAQ</title>
+        <meta name="warning" content="HC SVNT DRACONES" />
+        <meta name="viewport" content="width=960" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <link href="reset.css" rel="stylesheet" media="all" />
+        <link href="about.css" rel="stylesheet" media="all" />      
+    </head>
+    <body>
+        <div id="area">
+            <nav>
+                <header>
+                    <a href="/"><img src="hurricane.png" alt="Radarmatic" /></a>
+                    <h1>Radarmatic</h1>
+                </header>
+                <ul>
+                    <li>
+                        <a href="faq.html" class="selected">faq</a>
+                    </li>
+                    <li>
+                        <a href="api.html">api</a>
+                    </li>
+                    <li>
+                        <a href="contact.html">contact</a>
+                    </li>                                                            
+                </ul>
+            </nav>
+            <article>
+                <h2>What am I looking at?</h2>
+                <div class="section">
+                    <p>You&rsquo;re looking at the level of <a href="http://en.wikipedia.org/wiki/Precipitation_(meteorology)">precipitation</a> in the air, as measured by a network of weather radar sites called <a href="http://www.srh.noaa.gov/srh/sod/radar/radinfo/radinfo.html">NEXRAD</a>.</p>
+                    <p>The National Weather Service makes the raw data from 200 radars across the continental US and overseas available on <a href="http://www.nws.noaa.gov/tg/radfiles.html">noaa.gov</a> for anyone to use, usually within minutes of being generated.  Radarmatic caches and translates the radar data from its native binary format to JSON and then republishes it as a <a href="api.html">web service</a>.</p>
+                    <p>The radar imagery on the <a href="/">home page</a> is rendered in-browser using Javascript and the HTML5 <a href="http://diveintohtml5.org/canvas.html">canvas</a> element.</p>
+                </div>
+                
+                <h2>How does it work?</h2>
+                <div class="section">
+                    <p>Drag the map around to navigate.  The white dots show the locations of weather radar sites operated by the NWS, FAA, and DOD.  Radarmatic will draw the most recent radar image from the site closest to the center of the map (only one site can be viewed at a time).  The grey ring represents the radar&rsquo;s maximum range of surveillance.</p>
+                    <p>The colored areas on the map indicate precipitation.  The <a href="http://www.wunderground.com/radar/help.asp">radar</a> sends out rapid pulses and then measures the strength of return echoes in units called <a href="http://en.wikipedia.org/wiki/DBZ_(meteorology)">decibels of reflectivity</a> (dBZ), shown on the scale in the upper righthand corner.  Higher reflectivity (usually) means more intense precipitation, ranging from light drizzle to nightmarish hail.</p>
+                    <p>The data is processed by decluttering algorithms, but they&rsquo;re far from perfect.  It&rsquo;s very common to see non-precipitation reflections like flocks of birds or swarms of insects depending on the season, especially near the center of the image.</p>
+                </div>
+                
+                <h2>Which radar product does Radarmatic use?</h2>
+                <div class="section">
+                    <p>While the NEXRAD system is capable of generating several different exciting <a href="http://sysu1.wsicorp.com/unidata/intro.html">products</a>, the Radarmatic web site and API are both limited to showing <a href="http://okfirst.mesonet.org/train/nids/BREF.html">base reflectivity</a> (0.5&deg; elevation) at 124 nmi and 248 nmi range.  Planned updates include support for base velocity data and alternate elevations.  The web site makes an aesthetic choice to omit clear air mode and values below 10 dBZ, but the data served by API is completely unmodified.</p>
+                </div>                
+                
+                <h2>Why can&rsquo;t I view more than one radar at once?</h2>
+                <div class="section">
+                    <p>An image that takes multiple radars into account is called a mosaic, and it&rsquo;s difficult to generate. Wikipedia <a href="http://en.wikipedia.org/wiki/Weather_radar">explains</a>: &ldquo;[A radar network] can consist of different types of radar with different characteristics like beam width, wavelength and calibration. These differences have to be taken into account when matching data across the network, particularly to decide what data to use when two radars cover the same point. If one uses the stronger echo but it comes from the most distant radar, one uses returns that are from higher altitude coming from rain or snow that might evaporate before reaching the ground. If one uses data from the closest radar, it might be attenuated passing through a thunderstorm. Composite images of precipitations using a network of radars are made with all those limitations in mind.&rdquo;</p>
+                </div>             
+            </article>
+        </div>
+    </body>
+</html>

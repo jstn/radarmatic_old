@@ -1,0 +1,20 @@
+body { text-align: center; }
+#area { margin: 0 auto; margin-top: 40px; width: 880px; overflow: hidden; }
+a { color: black; }
+a:hover { text-decoration: none; }
+
+nav { float: left; width: 200px; text-align: center; }
+nav h1 { margin-top: 10px; font: bold 25px helvetica,sans-serif; }
+nav ul { margin-top: 10px; }            
+nav header { width: 200px; text-align: center; }
+nav li a { display: block; padding: 10px; cursor: pointer; font: 12px helvetica,sans-serif; text-decoration: none; }
+nav li a.selected { background: #eee; font-weight: bold; }
+nav li a:hover { background: #eee; }
+
+article { float: left; margin-left: 40px; width: 640px; font: 12px/17px helvetica,sans-serif; text-align: left; }
+article h2 { font-size: 18px; line-height: 24px; }
+
+.section { padding-bottom: 20px; }
+.section p { margin-top: 0.5em; margin-bottom: 1em; }
+
+div.code { font: 12px courier; padding: 15px; border: 1px solid #eee; }

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Radarmatic API Documentation</title>
+        <meta name="warning" content="HC SVNT DRACONES" />
+        <meta name="viewport" content="width=960" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <link href="reset.css" rel="stylesheet" media="all" />
+        <link href="about.css" rel="stylesheet" media="all" />    
+    </head>
+    <body>
+        <div id="area">
+            <nav>
+                <header>
+                    <a href="/"><img src="hurricane.png" alt="Radarmatic" /></a>
+                    <h1>Radarmatic</h1>
+                </header>
+                <ul>
+                    <li>
+                        <a href="faq.html">faq</a>
+                    </li>
+                    <li>
+                        <a href="api.html" class="selected">api</a>
+                    </li>
+                    <li>
+                        <a href="contact.html">contact</a>
+                    </li>                                                            
+                </ul>
+            </nav>
+            <article>
+                <h2>Disclaimers</h2>
+                <div class="section">
+                    <p>I make no guarantees about the accuracy or longevity of this service!  It is free for non-commercial use.  For any other use please <a href="contact.html">make contact</a>.</p>
+                </div>
+                
+                <h2>Overview</h2>
+                <div class="section">
+                    <p>Radarmatic runs on a Mac mini with 4GB of RAM colocated in Las Vegas.  It's written in Ruby using <a href="http://www.sinatrarb.com/">Sinatra</a> and served by nginx/passenger.  It also makes use of <a href="http://rtomayko.github.com/rack-cache/">rack::cache</a>, memcached, and a custom utility called <a href="http://github.com/jstn/radar2json">radar2json</a> to convert binary weather radar files to JSON.</p>
+                </div>
+                    
+                <h2>URLs</h2>
+                <div class="section">
+                    <p>To get the most recent image from (for example) the radar site <strong>krtx</strong>, request <a href="/kokx.json">radarmatic.com/<strong>krtx</strong>.json</a></p>
+                    <p>A list of the all the available radar sites can be found at <a href="sites_object.js">radarmatic.com/sites_object.js</a></p>
+                    <p>To get the &ldquo;nth&rdquo; image previous to the current one add a parameter called <em>index</em> to your query string.  For example, to retrieve the 7th most recent image before the current one for KNQA, request <a href="/knqa.json?index=7">radarmatic.com/knqa.json?<strong>index</strong>=7</a></p>
+                    <p>The default product type is &lsquo;p19r0&rsquo; but you can select any of the base reflectivity products using <a href="http://www.nws.noaa.gov/tg/radfiles.html">the same codes</a> as the NWS.  The other options are p19r1, p19r2, p19r3, and p20-r.  Use the <em>product</em> parameter, for example: <a href="/kgld.json?index=42&amp;product=p20-r">radarmatic.com/kgld.json?index=42&amp;<strong>product</strong>=p20-r</a>
+                </div>
+                
+                <h2>Format</h2>
+                <div class="section">
+                    <p>The <a href="http://wxp.unisys.com/wxp/Appendices/Formats/NIDS.html">NIDS format</a> is poorly documented, but you can find the interface control documents <a href="http://www.roc.noaa.gov/WSR88D/Program/ICDs.aspx">here</a>.  The JSON is an almost direct translation and looks like this:</p>
+                    
+                    <p>
+                        <div class="code">
+                            {<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;"wmo_header":"SDUS51 KOKX 020416",<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;"awips_id":"N0ROKX",<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;"message_code":19,<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;"message_time":1283401067,<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;"source_id":515,<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;"destination_id":0,<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;"sequence_number":5226,<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;"radar_latitude":40.865,<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;"radar_longitude":-72.864,<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;"radar_altitude":198,<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;"product_code":19,<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;"operational_mode":1,<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;"volume_coverage_pattern":32,<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;"volume_scan_number":27,<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;"volume_scan_time":1283400991,<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;"product_generation_time":1283400995,<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;"elevation_number":1,<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;"elevation_angle":0.5,<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;"maximum_reflectivity":64,<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;"calibration_constant":194,<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;"threshold_1":"ND",<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//...thresholds 2-15,<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;"threshold_16":"+28",<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;"layers":[<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"index_of_first_range_bin":0,<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"range_bin_count":230,<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"i_center_of_sweep":256,<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"j_center_of_sweep":280,<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"scale_factor":0.999,<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"radial_count":360,<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"radials":[<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"start_angle":1.7,<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"angle_delta":1.0,<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"range_bins": [19,10,9,8,9,9,8,9,8,8...]<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"start_angle":2.7,<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"angle_delta":1.0,<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"range_bins": [0,8,0,0,8,0,7,7,0,7,0...]<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...    <br />                          
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;]<br />
+                            }
+                        </div>
+                    </p>
+                    
+                    <p>
+                        Each image has 360 radials. Each radial has a start angle, an angle delta, and 230 range bins that correspond to 1km increments radiating outward from the center.  The values correspond to the threshold values from the header.
+                    </p>
+                    
+                    <p>
+                        One way to draw the image is to iterate over each radial, sweeping out clockwise arcs starting from start_angle and ending at start_angle+delta_angle.  Each bin value in the array is one 1km further than the last, and the values range from 0 to 15.
+                    </p>
+                    
+                    <p>
+                        I realize this is a woefully sparse introduction and plan to improve this documentation soon.  In the meantime, <a href="contact.html">contact</a> me with questions or suggestions.
+                    </p>
+                </div>
+            </article>
+        </div>
+    </body>
+</html>
