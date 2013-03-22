@@ -129,7 +129,7 @@ def radar_file_path(rid,product,index)
     
     unless File.exists?(file_path)
       parsed_cache_cleanup
-      url = "http://140.90.128.70/pub/SL.us008001/DF.of/DC.radar/DS.#{product}/SI.#{rid}/#{listing[index]['file']}"
+      url = "http://weather.noaa.gov/pub/SL.us008001/DF.of/DC.radar/DS.#{product}/SI.#{rid}/#{listing[index]['file']}"
       `curl -s -o #{file_path} #{url}`
     end
     
@@ -159,7 +159,7 @@ def radar_file_path(rid,product,index)
     
     unless dont_download
       parsed_cache_cleanup
-      url = "http://140.90.128.70/pub/SL.us008001/DF.of/DC.radar/DS.#{product}/SI.#{rid}/sn.last"
+      url = "http://weather.noaa.gov/pub/SL.us008001/DF.of/DC.radar/DS.#{product}/SI.#{rid}/sn.last"
       `curl -s -o #{file_path} #{url}`
     end
   end
@@ -175,7 +175,7 @@ def get_listing(rid,product)
   exists = File.exists? file_path
   newish = exists ? (Time.now - File.mtime(file_path)) < MAX_LISTING_AGE : false
   unless exists && newish
-     url = "http://140.90.128.70/pub/SL.us008001/DF.of/DC.radar/DS.#{product}/SI.#{rid}/?C=M;O=D"
+     url = "http://weather.noaa.gov/pub/SL.us008001/DF.of/DC.radar/DS.#{product}/SI.#{rid}/?C=M;O=D"
      `curl -s -G -d 'C=M;O=D' -o #{file_path} #{url}`
   end
   
