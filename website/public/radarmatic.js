@@ -6,7 +6,15 @@
 	'panel_zoutdown.png',
 	'panel_animating.png',
 	'panel_animating_zindown.png',
-	'panel_animating_zoutdown.png'
+	'panel_animating_zoutdown.png',
+	'panel_2x.png',
+	'panel_playdown_2x.png',
+	'panel_pausedown_2x.png',
+	'panel_zindown_2x.png',
+	'panel_zoutdown_2x.png',
+	'panel_animating_2x.png',
+	'panel_animating_zindown_2x.png',
+	'panel_animating_zoutdown_2x.png'
 ].each(function(src) {
 	$('radarmatic').adopt(
 		new Element('img',{
@@ -198,33 +206,76 @@ $(window).addEvent('load',function() {
 	}
 
 	loadRadar(current_site);
-	
-	$('animation').addEvent('mousedown',function() {
-		$('front').setStyle('background',animating ? "url('panel_pausedown.png')" : "url('panel_playdown.png')");
-		animating ? stopAnimation() : startAnimation();
-	});
-	
-	$('animation').addEvent('mouseup',function() {
-		$('front').setStyle('background',animating ? "url('panel_animating.png')" : "url('panel.png')");
-	});	
-	
-	$('zoom_in').addEvent('mousedown',function() {
-		$('front').setStyle('background',animating ? "url('panel_animating_zindown.png')" : "url('panel_zindown.png')");
 
-		if (gmap.getZoom() < 15)
-			gmap.setZoom(gmap.getZoom() + 1);
-	});
+	if( window.devicePixelRatio >= 2 ){
+        $('animation').addEvent('mousedown',function() {
+			$('front').setStyle('background',animating ? "url('panel_pausedown_2x.png')" : "url('panel_playdown_2x.png')");
+			$('front').setStyle('background-size','200px 200px');
+			animating ? stopAnimation() : startAnimation();
+		});
+    }else{
+        $('animation').addEvent('mousedown',function() {
+			$('front').setStyle('background',animating ? "url('panel_pausedown.png')" : "url('panel_playdown.png')");
+			animating ? stopAnimation() : startAnimation();
+		});
+    }
 	
-	$('zoom_out').addEvent('mousedown',function() {
-		$('front').setStyle('background',animating ? "url('panel_animating_zoutdown.png')" : "url('panel_zoutdown.png')");
+	if( window.devicePixelRatio >= 2 ){
+		$('animation').addEvent('mouseup',function() {
+			$('front').setStyle('background',animating ? "url('panel_animating_2x.png')" : "url('panel_2x.png')");
+			$('front').setStyle('background-size','200px 200px');
+		});
+	}else{
+		$('animation').addEvent('mouseup',function() {
+			$('front').setStyle('background',animating ? "url('panel_animating.png')" : "url('panel.png')");
+		});
+	}	
+	
+	if( window.devicePixelRatio >= 2 ){
+		$('zoom_in').addEvent('mousedown',function() {
+			$('front').setStyle('background',animating ? "url('panel_animating_zindown_2x.png')" : "url('panel_zindown_2x.png')");
+			$('front').setStyle('background-size','200px 200px');
 
-		if (gmap.getZoom() > 3)		
-			gmap.setZoom(gmap.getZoom() - 1);		
-	});
-	
-	var mup = function() {
-		$('front').setStyle('background',animating ? "url('panel_animating.png')" : "url('panel.png')");
+			if (gmap.getZoom() < 15)
+				gmap.setZoom(gmap.getZoom() + 1);
+		});
+	}else{
+		$('zoom_in').addEvent('mousedown',function() {
+			$('front').setStyle('background',animating ? "url('panel_animating_zindown.png')" : "url('panel_zindown.png')");
+
+			if (gmap.getZoom() < 15)
+				gmap.setZoom(gmap.getZoom() + 1);
+		});
 	}
+	
+	if( window.devicePixelRatio >= 2 ){
+		$('zoom_out').addEvent('mousedown',function() {
+			$('front').setStyle('background',animating ? "url('panel_animating_zoutdown_2x.png')" : "url('panel_zoutdown_2x.png')");
+			$('front').setStyle('background-size','200px 200px');
+
+			if (gmap.getZoom() > 3)		
+				gmap.setZoom(gmap.getZoom() - 1);		
+		});
+	}else{
+		$('zoom_out').addEvent('mousedown',function() {
+			$('front').setStyle('background',animating ? "url('panel_animating_zoutdown.png')" : "url('panel_zoutdown.png')");
+
+			if (gmap.getZoom() > 3)		
+				gmap.setZoom(gmap.getZoom() - 1);		
+		});
+	}
+
+	if( window.devicePixelRatio >= 2 ){
+		var mup = function() {
+			$('front').setStyle('background',animating ? "url('panel_animating_2x.png')" : "url('panel_2x.png')");
+			$('front').setStyle('background-size','200px 200px');
+		}
+	}else{
+		var mup = function() {
+			$('front').setStyle('background',animating ? "url('panel_animating.png')" : "url('panel.png')");
+		}
+	}
+
 	$('zoom_in').addEvent('mouseup',mup);
 	$('zoom_out').addEvent('mouseup',mup);
 	
@@ -405,14 +456,25 @@ RadarOverlay.prototype.onAdd = function() {
 }
 
 DotOverlay.prototype.onAdd = function() {
-	this._dot = new Element('img',{
-		'src': 'dot.png',
-		'styles': {
-			'width': 20,
-			'height': 20,			
-			'position': 'absolute'
-		}
-	});
+	if( window.devicePixelRatio >= 2 ){
+		this._dot = new Element('img',{
+			'src': 'dot_2x.png',
+			'styles': {
+				'width': 20,
+				'height': 20,			
+				'position': 'absolute'
+			}
+		});
+	}else{
+		this._dot = new Element('img',{
+			'src': 'dot.png',
+			'styles': {
+				'width': 20,
+				'height': 20,			
+				'position': 'absolute'
+			}
+		});
+	}
 	var panes = this.getPanes();
 	panes.overlayImage.appendChild(this._dot);
 }

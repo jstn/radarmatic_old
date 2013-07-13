@@ -189,6 +189,7 @@
 				GCC_PREFIX_HEADER = radarparse_Prefix.pch;
 				INSTALL_PATH = /usr/local/bin;
 				PRODUCT_NAME = radarparse;
+				SDKROOT = macosx10.8;
 			};
 			name = Debug;
 		};
@@ -202,6 +203,7 @@
 				GCC_PREFIX_HEADER = radarparse_Prefix.pch;
 				INSTALL_PATH = /usr/local/bin;
 				PRODUCT_NAME = radarparse;
+				SDKROOT = macosx10.8;
 			};
 			name = Release;
 		};

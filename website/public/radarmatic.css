@@ -20,3 +20,8 @@ a:hover { text-decoration: none; }
 .front_flip { -webkit-transform: rotateY(-180deg); z-index: 900; }
 #back { opacity: 0; position: absolute; top: 0; left: 0; background: url('panel_back.png'); height: 200px; width: 200px; z-index: 800; }
 .back_flip { -webkit-transform: rotateY(0deg) !important; z-index: 1000; }
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+.info_i:hover { background: url('info_overlay_2x.png'); background-size: 17px 17px; }
+#front { background: url('panel_2x.png'); background-size: 200px 200px; }
+#back { background: url('panel_back_2x.png'); background-size: 200px 200px; }
+#panel { background-size: 200px 200px; }}
