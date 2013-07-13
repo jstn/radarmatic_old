@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'sinatra'
 require 'rack/cache'
-require 'radarmatic'
+require './radarmatic'
 require 'memcached'
  
 set :env, :production

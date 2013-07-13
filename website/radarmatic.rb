@@ -1,8 +1,8 @@
 require 'rubygems'
 require 'sinatra'
 require 'time'
-require 'md5'
-require 'sites'
+require 'digest/md5'
+require './sites'
 
 MAX_PRODUCT_AGE = 300
 MAX_LISTING_AGE = 600
@@ -91,7 +91,7 @@ def parsed_path_for_radar(type,radar_path)
 end
 
 def digest_for_radar(radar_path)
-  MD5.file(radar_path).to_s
+  Digest::MD5.file(radar_path).to_s
 end
 
 def expiration_time(rid,product,index)
